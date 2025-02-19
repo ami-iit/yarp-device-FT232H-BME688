@@ -3,14 +3,20 @@
 
 FT232H_I2C::FT232H_I2C(unsigned int i2cChannel)
 {
+    std::cout << "In constructor" << std::endl;
 	Init_libMPSSE();
+    printVersionCheck();
+    std::cout << "sono qui" << std::endl;
     DWORD channels;
     I2C_GetNumChannels(&channels);
+    std::cout << "getting channels" << std::endl;
 
     ChannelConfig channelConf;
 	channelConf.ClockRate = I2C_CLOCK_STANDARD_MODE;
 	channelConf.LatencyTimer = 10;
 	channelConf.Options =  0;
+
+    std::cout << "Number of available channels: " << channels << std::endl;
 
     if (channels == 0)
     {

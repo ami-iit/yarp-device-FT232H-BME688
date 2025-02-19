@@ -5,46 +5,30 @@
 
 
 #include "FT232H_BME688_Driver.h"
+#include "FT232H_i2c.h"
 
 #include <yarp/os/Log.h>
 #include <yarp/os/LogComponent.h>
 #include <yarp/os/LogStream.h>
-#include <yarp/os/Network.h>
 
 using namespace yarp::os;
-using namespace yarp::dev;
 
 bool FT232H_BME688_Driver::open(yarp::os::Searchable &config)
 {
-    try
-    {
-        ft232h_i2c = new FT232H_I2C(0);
-    }
-    catch (std::runtime_error& e)
-    {
-        yError() << "Runtime error: " << e.what();
-        return false;
-    }
+    runSensorUpdateThread = true;
+    sensorUpdateThread = std::thread(&FT232H_BME688_Driver::run, this);
+    yInfo() << "FT232H_BME688 Device is now running";
 
-    try
-    {
-        bme688 = new BME688(ft232h_i2c);
-    }
-    catch(std::runtime_error& e)
-    {
-        yError() << "Runtime error: " << e.what();
-        return false;
-    }
-
-    bme688->setupForReading();
-    bme688->readTempCalibrationData();
-    bme688->readPressureCalibrationData();
-    bme688->readHumidityCalibrationData();
     return true;
 }
 
 bool FT232H_BME688_Driver::close()
 {
+    runSensorUpdateThread = false;
+    sensorUpdateThread.join();
+
+    sensorDataPort.close();
+
     delete bme688;
     delete ft232h_i2c;
     bme688 = nullptr;
@@ -55,23 +39,65 @@ bool FT232H_BME688_Driver::close()
 
 void FT232H_BME688_Driver::run()
 {
-    Network yarp;
-    BufferedPort<Bottle> port;
-    port.open("/FT232H_BME688_Driver");
-    Bottle& sensorOutput = port.prepare();
-
-    while(true)
+    std::mutex x;
+    x.lock();
+    yInfo() << "Starting the device";
+    try
     {
+        yInfo() << "In try";
+        ft232h_i2c = new FT232H_I2C(0);
+    }
+    catch (std::runtime_error& e)
+    {
+        yError() << "Runtime error: " << e.what();
+        ft232h_i2c = nullptr;
+        // return false;
+    }
+    yInfo() << "Initialized I2C";
+
+    try
+    {
+        bme688 = new BME688(ft232h_i2c);
+    }
+    catch(std::runtime_error& e)
+    {
+        yError() << "Runtime error: " << e.what();
+        
+        delete ft232h_i2c;
+        ft232h_i2c = nullptr;
+        bme688 = nullptr;
+
+        // return false;
+    }
+    x.unlock();
+
+    if(!sensorDataPort.open("/FT232H_BME688/data"))
+    {
+        yError() << "Failed to open port /FT232H_BME688_Driver";
+        close();
+        // return false;
+    }
+
+    bme688->setupForReading();
+    bme688->readTempCalibrationData();
+    bme688->readPressureCalibrationData();
+    bme688->readHumidityCalibrationData();
+
+    yInfo() << "About to start the sensor update thread";
+    while(runSensorUpdateThread)
+    {
+        yarp::sig::Vector sensorOutput(3);
         bme688->readTemperature();
         bme688->readPressure();
         bme688->readHumidity();
 
         sensorOutput.clear();
-        sensorOutput.addFloat64(bme688->getTemperature());
-        sensorOutput.addFloat64(bme688->getPressure());
-        sensorOutput.addFloat64(bme688->getHumidity());
-        port.write();
+        sensorOutput.push_back(bme688->getTemperature());
+        sensorOutput.push_back(bme688->getPressure());
+        sensorOutput.push_back(bme688->getHumidity());
 
-        Time::delay(0.1);
+        sensorDataPort.prepare() = sensorOutput;
+        sensorDataPort.write();
+
     }
 }

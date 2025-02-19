@@ -26,6 +26,10 @@ if(NOT SKIP_ft232h_bme688)
       YARP::YARP_os
       YARP::YARP_sig
       YARP::YARP_dev
+      Threads::Threads
+      pthread
+      /home/nick/IIT_software/robotology-from-source/libmpsse/build/libmpsse.so
+      # libftd2xx.so
   )
 
   yarp_install(

@@ -7,6 +7,9 @@
 #define YARP_DEVICETEMPLATE_H
 
 #include <yarp/dev/DeviceDriver.h>
+#include <yarp/sig/Vector.h>
+#include <thread>
+#include <atomic>
 #include "FT232H_i2c.h"
 #include "BME688.h"
 
@@ -23,6 +26,13 @@ public:
 private:
     BME688* bme688;
     FT232H_I2C* ft232h_i2c;
+
+    yarp::os::BufferedPort<yarp::sig::Vector> sensorDataPort;
+    std::thread sensorUpdateThread;
+    bool runSensorUpdateThread;
+
+    // for publishing information
+
 };
 
 #endif
