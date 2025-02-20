@@ -2,7 +2,7 @@
 #define FT232H_I2C_H
 
 #include "ftd2xx.h"
-#include <libmpsse_i2c.h>
+#include "libmpsse_i2c.h"
 #include <iostream>
 
 #define I2C_DEVICE_BUFFER_SIZE			256

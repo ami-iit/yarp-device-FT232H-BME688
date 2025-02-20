@@ -15,8 +15,10 @@ using namespace yarp::os;
 
 bool FT232H_BME688_Driver::open(yarp::os::Searchable &config)
 {
+    yInfo() << "In the open function";
     runSensorUpdateThread = true;
     sensorUpdateThread = std::thread(&FT232H_BME688_Driver::run, this);
+    sensorUpdateThread.join();
     yInfo() << "FT232H_BME688 Device is now running";
 
     return true;
@@ -39,8 +41,6 @@ bool FT232H_BME688_Driver::close()
 
 void FT232H_BME688_Driver::run()
 {
-    std::mutex x;
-    x.lock();
     yInfo() << "Starting the device";
     try
     {
@@ -69,7 +69,6 @@ void FT232H_BME688_Driver::run()
 
         // return false;
     }
-    x.unlock();
 
     if(!sensorDataPort.open("/FT232H_BME688/data"))
     {

@@ -12,6 +12,7 @@
 #include <atomic>
 #include "FT232H_i2c.h"
 #include "BME688.h"
+// #include <boost/thread/thread.hpp>
 
 class FT232H_BME688_Driver :
         public yarp::dev::DeviceDriver

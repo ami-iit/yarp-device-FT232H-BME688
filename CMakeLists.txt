@@ -47,8 +47,6 @@ else()
   message (STATUS "yarp_catch2 and yarp_dev_tests libraries NOT found. Tests cannot be enabled")
 endif()
 
-include(YarpValgrindOptions)
-
 include(AddInstallRPATHSupport)
 add_install_rpath_support(BIN_DIRS "${CMAKE_INSTALL_FULL_BINDIR}"
                           LIB_DIRS "${CMAKE_INSTALL_FULL_LIBDIR}"

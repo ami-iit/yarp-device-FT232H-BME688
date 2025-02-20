@@ -26,6 +26,9 @@
 #define BME688_PRESS_XLSB0_REG_ADDR 0x21
 
 
+
+
+
 // pressure calibration parameters
 #define BME688_PRESS_CALIB_PAR_P1_MSB_REG_ADDR   0x8F
 #define BME688_PRESS_CALIB_PAR_P1_LSB_REG_ADDR   0x8E
