@@ -21,15 +21,21 @@ if(NOT SKIP_ft232h_bme688)
     FT232H_BME688_Driver.h
   )
 
+# Specify include directories
+target_include_directories(yarp_ft232h_bme688 PRIVATE
+    ${CMAKE_SOURCE_DIR}/extern/libftd2xx/include
+    ${CMAKE_SOURCE_DIR}/extern/libmpsse/include
+)
+
   target_link_libraries(yarp_ft232h_bme688
     PRIVATE
       YARP::YARP_os
       YARP::YARP_sig
       YARP::YARP_dev
-      # Threads::Threads
-      # pthread
+  )
+  target_link_libraries(yarp_ft232h_bme688
+    INTERFACE
       ftd2xx
-      # /home/nick/IIT_software/robotology-from-source/libmpsse/build/libmpsse.so
       mpsse
   )
 
