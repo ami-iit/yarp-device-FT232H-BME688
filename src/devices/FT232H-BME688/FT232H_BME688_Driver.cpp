@@ -16,6 +16,7 @@ using namespace yarp::os;
 bool FT232H_BME688_Driver::open(yarp::os::Searchable &config)
 {
     yInfo() << "In the open function";
+
     try
     {
         yInfo() << "In try";

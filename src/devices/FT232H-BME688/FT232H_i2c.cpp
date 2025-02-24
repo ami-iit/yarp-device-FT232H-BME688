@@ -4,6 +4,7 @@
 FT232H_I2C::FT232H_I2C(unsigned int i2cChannel)
 {
 	Init_libMPSSE();
+    printVersionCheck();
     DWORD channels;
     std::cout << "about to call get channels" << std::endl;
     I2C_GetNumChannels(&channels);
