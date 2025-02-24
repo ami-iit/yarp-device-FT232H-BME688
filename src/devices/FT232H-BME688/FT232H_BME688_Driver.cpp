@@ -16,36 +16,12 @@ using namespace yarp::os;
 bool FT232H_BME688_Driver::open(yarp::os::Searchable &config)
 {
     yInfo() << "In the open function";
-    runSensorUpdateThread = true;
-    sensorUpdateThread = std::thread(&FT232H_BME688_Driver::run, this);
-    sensorUpdateThread.join();
-    yInfo() << "FT232H_BME688 Device is now running";
-
-    return true;
-}
-
-bool FT232H_BME688_Driver::close()
-{
-    runSensorUpdateThread = false;
-    sensorUpdateThread.join();
-
-    sensorDataPort.close();
-
-    delete bme688;
-    delete ft232h_i2c;
-    bme688 = nullptr;
-    ft232h_i2c = nullptr;
-
-    return true;
-}
-
-void FT232H_BME688_Driver::run()
-{
-    yInfo() << "Starting the device";
     try
     {
         yInfo() << "In try";
+        yInfo() << "In try2";
         ft232h_i2c = new FT232H_I2C(0);
+        yInfo() << "After try";
     }
     catch (std::runtime_error& e)
     {
@@ -81,6 +57,30 @@ void FT232H_BME688_Driver::run()
     bme688->readTempCalibrationData();
     bme688->readPressureCalibrationData();
     bme688->readHumidityCalibrationData();
+    runSensorUpdateThread = true;
+    sensorUpdateThread = std::thread(&FT232H_BME688_Driver::run, this);
+    yInfo() << "FT232H_BME688 Device is now running";
+
+    return true;
+}
+
+bool FT232H_BME688_Driver::close()
+{
+    runSensorUpdateThread = false;
+    sensorUpdateThread.join();
+
+    sensorDataPort.close();
+
+    delete bme688;
+    delete ft232h_i2c;
+    bme688 = nullptr;
+    ft232h_i2c = nullptr;
+
+    return true;
+}
+
+void FT232H_BME688_Driver::run()
+{
 
     yInfo() << "About to start the sensor update thread";
     while(runSensorUpdateThread)

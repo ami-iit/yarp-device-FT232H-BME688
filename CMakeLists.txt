@@ -73,6 +73,7 @@ yarp_configure_external_installation(${PROJECT_NAME})
 find_package(Doxygen)
 
 add_subdirectory(src)
+add_subdirectory(extern)
 #add_subdirectory(doc)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES)
