@@ -33,11 +33,15 @@ target_include_directories(yarp_ft232h_bme688 PRIVATE
       YARP::YARP_sig
       YARP::YARP_dev
   )
-  target_link_libraries(yarp_ft232h_bme688
-    INTERFACE
-      ftd2xx
-      mpsse
-  )
+  # target_link_libraries(yarp_ft232h_bme688
+  #   PRIVATE
+  #     ftd2xx
+  #     mpsse
+  # )
+
+target_include_directories(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/extern/libftd2xx/include)
+target_link_libraries(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/extern/libftd2xx/libftd2xx.so)
+target_link_libraries(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/extern/libmpsse/libmpsse.so)
 
   yarp_install(
     TARGETS yarp_ft232h_bme688
