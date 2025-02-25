@@ -9,10 +9,8 @@
 #include <yarp/dev/DeviceDriver.h>
 #include <yarp/sig/Vector.h>
 #include <thread>
-#include <atomic>
 #include "FT232H_i2c.h"
 #include "BME688.h"
-// #include <boost/thread/thread.hpp>
 
 class FT232H_BME688_Driver :
         public yarp::dev::DeviceDriver
@@ -28,11 +26,11 @@ private:
     BME688* bme688;
     FT232H_I2C* ft232h_i2c;
 
+    // for publishing information
     yarp::os::BufferedPort<yarp::sig::Vector> sensorDataPort;
     std::thread sensorUpdateThread;
     bool runSensorUpdateThread;
 
-    // for publishing information
 
 };
 

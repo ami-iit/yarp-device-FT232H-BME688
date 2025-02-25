@@ -15,22 +15,15 @@ using namespace yarp::os;
 
 bool FT232H_BME688_Driver::open(yarp::os::Searchable &config)
 {
-    yInfo() << "In the open function";
-
     try
     {
-        yInfo() << "In try";
-        yInfo() << "In try2";
         ft232h_i2c = new FT232H_I2C(0);
-        yInfo() << "After try";
     }
     catch (std::runtime_error& e)
     {
         yError() << "Runtime error: " << e.what();
         ft232h_i2c = nullptr;
-        // return false;
     }
-    yInfo() << "Initialized I2C";
 
     try
     {
@@ -83,7 +76,6 @@ bool FT232H_BME688_Driver::close()
 void FT232H_BME688_Driver::run()
 {
 
-    yInfo() << "About to start the sensor update thread";
     while(runSensorUpdateThread)
     {
         yarp::sig::Vector sensorOutput(3);
