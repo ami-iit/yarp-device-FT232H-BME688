@@ -83,11 +83,6 @@ if(NOT SKIP_ft232h_bme688)
     FT232H_BME688_Driver.h
   )
 
-# Specify include directories
-#target_include_directories(yarp_ft232h_bme688 PRIVATE
-##    ${CMAKE_SOURCE_DIR}/extern/libftd2xx/include
- #   ${CMAKE_SOURCE_DIR}/extern/libmpsse/include
-#)
 
   target_link_libraries(yarp_ft232h_bme688
       PUBLIC
@@ -96,10 +91,9 @@ if(NOT SKIP_ft232h_bme688)
       YARP::YARP_dev
   )
 
-target_include_directories(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/extern/libftd2xx/include)
-target_include_directories(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/extern/libmpsse/include)
-target_link_libraries(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/extern/libftd2xx/libftd2xx.so)
-target_link_libraries(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/extern/libmpsse/libmpsse.so)
+target_include_directories(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/include)
+target_link_libraries(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/lib/libftd2xx.so)
+target_link_libraries(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/lib/libmpsse.so)
 
   yarp_install(
     TARGETS yarp_ft232h_bme688
