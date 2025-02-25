@@ -2,6 +2,5 @@
 # SPDX-License-Identifier: BSD-3-Clause
 
 #message (Looking for CMakeFiles into this folder: ${YARP_MODULE_DIR})
-include(${YARP_MODULE_DIR}/YarpDeviceParamsParserGenerator.cmake)
 
 add_subdirectory(FT232H-BME688)

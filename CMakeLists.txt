@@ -13,6 +13,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 find_package(YCM 0.15.3 REQUIRED)
 
 include(GNUInstallDirs)
+add_subdirectory(extern)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}")
@@ -32,8 +33,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 set(YARP_FORCE_DYNAMIC_PLUGINS TRUE CACHE INTERNAL "yarp-devices-ros2 is always built with dynamic plugins")
 option(BUILD_SHARED_LIBS "Build libraries as shared as opposed to static" ON)
 
-find_package(YARP 3.10.0 COMPONENTS os sig dev rosmsg serversql OPTIONAL_COMPONENTS math REQUIRED)
-find_package(YARP 3.10.0 COMPONENTS catch2 dev_tests QUIET)
+find_package(YARP 3.9.0 COMPONENTS os sig dev rosmsg serversql OPTIONAL_COMPONENTS math REQUIRED)
+find_package(YARP 3.9.0 COMPONENTS catch2 dev_tests QUIET)
 find_package(Threads REQUIRED)
 
 if(YARP_catch2_FOUND AND YARP_dev_tests_FOUND)
@@ -70,10 +71,8 @@ set(CMAKE_CXX_FLAGS "${YARP_CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
 yarp_configure_plugins_installation(${PROJECT_NAME})
 yarp_configure_external_installation(${PROJECT_NAME})
 
-find_package(Doxygen)
-
 add_subdirectory(src)
-add_subdirectory(extern)
+
 #add_subdirectory(doc)
 
 feature_summary(WHAT ALL INCLUDE_QUIET_PACKAGES)

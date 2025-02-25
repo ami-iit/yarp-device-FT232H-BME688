@@ -8,9 +8,6 @@ yarp_prepare_plugin(ft232h_bme688
   INTERNAL ON
 )
 
-add_executable(printSensorValues test.cpp BME688.cpp FT232H_i2c.cpp)
-add_executable(yarpDebugTest test2.cpp)
-
 macro(YARP_ADD_PLUGIN_LOCAL _library_name)
   if(YARP_FORCE_DYNAMIC_PLUGINS OR BUILD_SHARED_LIBS)
       set(_library_type "SHARED")
@@ -87,10 +84,10 @@ if(NOT SKIP_ft232h_bme688)
   )
 
 # Specify include directories
-target_include_directories(yarp_ft232h_bme688 PRIVATE
-    ${CMAKE_SOURCE_DIR}/extern/libftd2xx/include
-    ${CMAKE_SOURCE_DIR}/extern/libmpsse/include
-)
+#target_include_directories(yarp_ft232h_bme688 PRIVATE
+##    ${CMAKE_SOURCE_DIR}/extern/libftd2xx/include
+ #   ${CMAKE_SOURCE_DIR}/extern/libmpsse/include
+#)
 
   target_link_libraries(yarp_ft232h_bme688
       PUBLIC
@@ -99,31 +96,10 @@ target_include_directories(yarp_ft232h_bme688 PRIVATE
       YARP::YARP_dev
   )
 
-  target_link_libraries(printSensorValues
-    PRIVATE
-      YARP::YARP_os
-      YARP::YARP_sig
-      YARP::YARP_dev
-  )
-  target_link_libraries(yarpDebugTest
-      PRIVATE
-      YARP::YARP_os
-      YARP::YARP_init
-      yarp_ft232h_bme688
-  )
-  # target_link_libraries(yarp_ft232h_bme688
-  #   PRIVATE
-  #     ftd2xx
-  #     mpsse
-  # )
-
 target_include_directories(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/extern/libftd2xx/include)
+target_include_directories(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/extern/libmpsse/include)
 target_link_libraries(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/extern/libftd2xx/libftd2xx.so)
 target_link_libraries(yarp_ft232h_bme688 PUBLIC ${CMAKE_SOURCE_DIR}/extern/libmpsse/libmpsse.so)
-
-target_include_directories(printSensorValues PUBLIC ${CMAKE_SOURCE_DIR}/extern/libftd2xx/include)
-target_link_libraries(printSensorValues PUBLIC ${CMAKE_SOURCE_DIR}/extern/libftd2xx/libftd2xx.so)
-target_link_libraries(printSensorValues PUBLIC ${CMAKE_SOURCE_DIR}/extern/libmpsse/libmpsse.so)
 
   yarp_install(
     TARGETS yarp_ft232h_bme688
