@@ -4,10 +4,6 @@ Yarp device for FT232H-BME688
 
 This repository contains the YARP plugin for the BME688 temperature, pressure, humidity, and gas sensor when using the FT232H breakout as the middle-man. This YARP device currently only supports extracting temperature, pressure, and humidity values, support for reading the gas measurement is currently not supported. **Note:** This device has only been tested on LTS Ubuntu Distributions.
 
-<h1 align="center"> Documentation </h1>
-
-This YARP device includes and uses the following shared libraries provided by FTDI: [libftd2xx version 1.4.32 for Linux](https://ftdichip.com/drivers/d2xx-drivers/) and [libmpsse version 1.0.7 for Linux](https://ftdichip.com/software-examples/mpsse-projects/libmpsse-i2c-examples/)
-
 <h1 align="center"> Installation </h1>
 
 ### Edit the uDev Rules for the FT232H
@@ -72,8 +68,8 @@ Some users may receive the following error when running the YARP device: `[ERROR
 
 License
 ---------
+This YARP device includes and uses the following shared libraries provided by FTDI: [libftd2xx version 1.4.32 for Linux](https://ftdichip.com/drivers/d2xx-drivers/) and [libmpsse version 1.0.7 for Linux](https://ftdichip.com/software-examples/mpsse-projects/libmpsse-i2c-examples/). See the corresponding websites for licensing information regarding these libraries. All other materials are subject to the BSD-3-Clause license, see LICENSE file for more information
 
-:construction: This repository is currently work in progress. :construction:
 
 Maintainers
 --------------
