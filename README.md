@@ -53,7 +53,12 @@ To make the device detectable, you can **either**:
 4) Type: `yarpdev --device ft232h_bme688`
 5) While the device is running, open a new terminal and type: `yarp read ... /FT232H_BME688/data`
 
-**Note: data is send from the YARP device in in the following order:** `temperature pressure humidity`
+**Note: data is sent from the YARP device in the following order:** `temperature pressure humidity`
+
+Units are as follows:
+- Temperature: `°C`
+- Pressure: `hPa`
+- Humitidy: `%`
 
 
 <h1 align="center"> Troubleshooting the device </h1>
