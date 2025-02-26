@@ -34,6 +34,10 @@ cmake .. -DCMAKE_INSTALL_PREFIX=<install_prefix>
 make
 make install
 ~~~
+To make the device detectable, you can **either**:
+- Add `<installation_path>/share/yarp` to the `YARP_DATA_DIRS` environment variable.
+- If YARP has been installed using [robotology-superbuild](https://github.com/robotology/robotology-superbuild), one can use `<directory-where-you-downloaded-robotology-superbuild>/build/install` for the `<installation_path>`
+
 
 ### Edit your LD_LIBRARY_PATH env variable
 1) Edit your `.bashrc` to append the full path of the `lib` folder provided by the YARP device to the `LD_LIBRARY_PATH` environment variable
