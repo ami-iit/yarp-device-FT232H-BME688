@@ -23,6 +23,7 @@ bool FT232H_BME688_Driver::open(yarp::os::Searchable &config)
     {
         yError() << "Runtime error: " << e.what();
         ft232h_i2c = nullptr;
+        return false;
     }
 
     try
@@ -32,19 +33,18 @@ bool FT232H_BME688_Driver::open(yarp::os::Searchable &config)
     catch(std::runtime_error& e)
     {
         yError() << "Runtime error: " << e.what();
-        
         delete ft232h_i2c;
         ft232h_i2c = nullptr;
         bme688 = nullptr;
 
-        // return false;
+        return false;
     }
 
     if(!sensorDataPort.open("/FT232H_BME688/data"))
     {
         yError() << "Failed to open port /FT232H_BME688_Driver";
         close();
-        // return false;
+        return false;
     }
 
     bme688->setupForReading();
