@@ -73,6 +73,12 @@ bool FT232H_BME688_Driver::close()
     return true;
 }
 
+float round(float var)
+{
+    float value = (int)(var * 100 + .5);
+    return (float)value / 100;
+}
+
 void FT232H_BME688_Driver::run()
 {
 
@@ -84,9 +90,9 @@ void FT232H_BME688_Driver::run()
         bme688->readHumidity();
 
         sensorOutput.clear();
-        sensorOutput.push_back(bme688->getTemperature());
-        sensorOutput.push_back(bme688->getPressure());
-        sensorOutput.push_back(bme688->getHumidity());
+        sensorOutput.push_back(round(bme688->getTemperature()));
+        sensorOutput.push_back(round(bme688->getPressure()));
+        sensorOutput.push_back(round(bme688->getHumidity()));
 
         sensorDataPort.prepare() = sensorOutput;
         sensorDataPort.write();
