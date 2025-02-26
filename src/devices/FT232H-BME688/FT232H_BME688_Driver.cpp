@@ -6,7 +6,6 @@
 
 #include "FT232H_BME688_Driver.h"
 #include "FT232H_i2c.h"
-#include <math.h>
 
 #include <yarp/os/Log.h>
 #include <yarp/os/LogComponent.h>
@@ -85,9 +84,9 @@ void FT232H_BME688_Driver::run()
         bme688->readHumidity();
 
         sensorOutput.clear();
-        sensorOutput.push_back(round(bme688->getTemperature()));
-        sensorOutput.push_back(round(bme688->getPressure()));
-        sensorOutput.push_back(round(bme688->getHumidity()));
+        sensorOutput.push_back(bme688->getTemperature());
+        sensorOutput.push_back(bme688->getPressure());
+        sensorOutput.push_back(bme688->getHumidity());
 
         sensorDataPort.prepare() = sensorOutput;
         sensorDataPort.write();
