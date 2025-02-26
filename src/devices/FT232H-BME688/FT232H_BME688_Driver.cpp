@@ -6,6 +6,7 @@
 
 #include "FT232H_BME688_Driver.h"
 #include "FT232H_i2c.h"
+#include <math.h>
 
 #include <yarp/os/Log.h>
 #include <yarp/os/LogComponent.h>
@@ -71,12 +72,6 @@ bool FT232H_BME688_Driver::close()
     ft232h_i2c = nullptr;
 
     return true;
-}
-
-float round(float var)
-{
-    float value = (int)(var * 100 + .5);
-    return (float)value / 100;
 }
 
 void FT232H_BME688_Driver::run()
