@@ -27,7 +27,7 @@ SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6015", GROUP="plugde
 
 ~~~
 git clone https://github.com/ami-iit/yarp-device-FT232H-BME688.git
-cd yarp-device-FT232H-BME688.git
+cd yarp-device-FT232H-BME688
 mkdir build
 cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=<install_prefix>
